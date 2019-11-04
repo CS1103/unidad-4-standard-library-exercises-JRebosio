@@ -1,0 +1,40 @@
+#ifndef STANDARD_LIBRARY_EXERCISE1_
+#define STANDARD_LIBRARY_EXERCISE1_
+
+#include <iostream>
+#include <vector>
+#include <iterator>
+#include <string>
+#include <sstream>
+
+using std::string;
+using std::cin;
+using std::cout;
+using std::vector;
+using std::istream_iterator;
+using std::istringstream;
+
+int main(){
+    int t,i;
+    string line;
+    cin>>t;
+    cin.ignore();
+    while(t--){
+        cin.ignore();
+        i=0;
+        getline(cin,line);
+        istringstream s(line);
+        vector<int> nums{istream_iterator<int>(s),istream_iterator<int>()};
+        getline(cin, line);
+        vector<string> floats(nums.size()+1);
+        string temp;
+        istringstream s2(line);
+        while(s2>>floats[nums[i++]]) {}
+        for(size_t u=1; u<=nums.size();u++) cout<< floats[u]<<"\n";
+        if (t) cout<<"\n";
+        nums.clear();
+        floats.clear();
+    }
+}
+
+#endif //STANDARD_LIBRARY_EXERCISE1_

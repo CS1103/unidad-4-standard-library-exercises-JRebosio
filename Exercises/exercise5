@@ -1,0 +1,106 @@
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <map>
+using namespace std;
+
+struct Team{
+    int b=0,c=0,d=0,e=0,g=0,f=0,h=0,i=0;
+};
+
+bool cmp(const pair<string,Team>& team1,const pair<string,Team>&  team2){
+    Team t1=team1.second;
+    Team t2=team2.second;
+    if(t1.b>t2.b) return true;
+    else if(t1.b==t2.b){
+        if(t1.d>t2.d) return true;
+        else if (t1.d==t2.d) {
+            if(t1.g>t2.g) return true;
+            else if(t1.g==t2.g) {
+                if(t1.h>t2.h)return true ;
+                else if(t1.h==t2.h){
+                    if(t1.c>t2.c) return true;
+                    else if(t1.c==t2.c) {
+                        if (team1.first>team2.first) return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+};
+
+
+
+int main() {
+    int t, n, games;
+    cin >> t;
+    cin.ignore();
+    map<string, Team> teams;
+    while (t--) {
+        string cup;
+        getline(cin, cup);
+        int position = 1;
+        cin >> n;
+        cin.ignore();
+        for (int i = 0; i < n; i++) {
+            string name;
+            getline(cin, name);
+            teams[name] = Team();
+        }
+        cin >> games;
+        cin.ignore();
+        while (games--) {
+            string t1, t2;
+            int g1, g2;
+            getline(cin, t1, '#');
+            cin >> g1;
+            cin.ignore();
+            cin >> g2;
+            cin.ignore();
+            getline(cin, t2);
+            teams[t1].h += g1;
+            teams[t1].i += g2;
+            teams[t1].c++;
+            teams[t1].g += g1 - g2;
+            teams[t2].h += g2;
+            teams[t2].i += g1;
+            teams[t2].c++;
+            teams[t2].g += g2 - g1;
+            if (g1 > g2) {
+                teams[t1].b += 3;
+                teams[t1].d++;
+                teams[t2].f++;
+            } else if (g2 > g1) {
+                teams[t2].b += 3;
+                teams[t2].d++;
+                teams[t1].f++;
+            } else {
+                teams[t1].e++;
+                teams[t2].e++;
+                teams[t1].b++;
+                teams[t2].b++;
+            }
+        }
+        vector<pair<string, Team> > v;
+        copy(teams.begin(), teams.end(), back_inserter(v));
+        sort(v.begin(), v.end(), cmp);
+        cout << "\n" << cup << "\n";
+        for (const auto &u:v) {
+            Team team = u.second;
+            cout << position++ << ") " << u.first << " " << team.b << "p, " << team.c << "g (" << team.d << "-"
+                 << team.e << "-" << team.f << "), " << team.g << "gd (" << team.h << "-" << team.i << ")" << "\n";
+        }
+        teams.clear();
+        v.clear();
+
+    }
+
+    return 0;
+}
+
+
+
+

@@ -1,0 +1,39 @@
+
+
+#ifndef STANDARD_LIBRARY_EXERCISE4_H
+#define STANDARD_LIBRARY_EXERCISE4_H
+
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+
+int main() {
+    string code;
+    while (cin >> code and code != "#") {
+        string::iterator i= code.end()-1;
+        while(i>code.begin() && *(i-1)>= *i) --i;
+        if(i==code.begin()) {
+            cout<<"No Sucessor\n";
+            continue;
+        }
+        string::iterator j=code.end()-1;
+        while (*j <= *(i - 1))
+            --j;
+        iter_swap(i - 1, j);
+        reverse(i, code.end());
+
+        cout<<code<<"\n";
+    }
+    return 0;
+}
+
+
+
+
+
+
+#endif //STANDARD_LIBRARY_EXERCISE4_H

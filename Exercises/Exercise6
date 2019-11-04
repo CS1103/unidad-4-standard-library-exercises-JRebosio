@@ -1,0 +1,67 @@
+
+#ifndef STANDARD_LIBRARY_EXERCISE6_H
+#define STANDARD_LIBRARY_EXERCISE6_H
+
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+
+using namespace std;
+
+struct contestant{
+    int pos=0;
+    int time=0;
+    int c=0;
+    int i[10]={0};
+    bool visit=false;
+};
+
+
+
+bool cmp(const contestant& a,const contestant& b){
+    if(!a.visit) return false;
+    if(!b.visit) return true;
+    if(a.c>b.c) return true;
+    if(a.c<b.c) return false;
+    if(a.time<b.time) return true;
+    if(a.time>b.time) return false;
+    if(a.pos<b.pos) return true;
+    if(a.pos>b.pos) return false;
+
+};
+int main() {
+    int t;
+    cin>>t;
+    cin.ignore();
+    while(t--) {
+        contestant C[101]={};
+        cin.ignore();
+        int pos, np, time; char l;
+        string line;
+        while (getline(cin,line)) {
+            if(line.empty()) break;
+            stringstream ss(line);
+            ss>>pos>> np >> time >> l;
+            C[pos].pos = pos;
+            C[pos].visit = true;
+            if (l == 'C') {
+                C[pos].time += time + 20 * C[pos].i[np];
+                C[pos].c++;
+            } else if (l == 'I') {
+                C[pos].i[np]++;
+            }
+        }
+        sort(C, C + 101, cmp);
+        for (const contestant &u:C) {
+            if (u.visit) cout << u.pos << " " << u.c << " " << u.time << "\n";
+        }
+        if(t)cout<<"\n";
+    }
+    return 0;
+}
+
+
+
+#endif //STANDARD_LIBRARY_EXERCISE6_H
