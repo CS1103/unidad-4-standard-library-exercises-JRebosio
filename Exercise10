@@ -21,7 +21,7 @@ int main() {
         for(const auto &[name,n] : m)
             cout << name << " " << fixed << setprecision(4) << n*100.0/count << '\n';
         m.clear();
-        if(t) cout<<'/n';
+        if(t) cout<<'\n';
     }
 
     return 0;
