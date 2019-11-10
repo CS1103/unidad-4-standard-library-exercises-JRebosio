@@ -1,0 +1,31 @@
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+#include <cstring>
+#include <set>
+using namespace std;
+
+multiset<int> Set;
+multiset<int>::iterator it;
+
+int main() {
+   int n, m, val;
+   while (cin>>n && n) {
+      Set.clear();
+      long int sum = 0;
+      while (n--) {
+         cin>>m;
+         while (m--) {
+        	cin>>val;
+            Set.insert(val);
+         }
+         it = Set.end();
+         it--;
+         int low = *Set.begin(), high = *it;
+         sum += high - low;
+         Set.erase(Set.begin());
+         Set.erase(it);
+      }
+      cout<<sum<<"\n";
+   }
+}
