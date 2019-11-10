@@ -1,0 +1,77 @@
+#include <cctype>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <set>
+#include <vector>
+#include <algorithm>
+
+
+using namespace std;
+
+
+map<string, set<string> > p;
+map<string, int> counts;
+
+void erase() {
+  for (auto &u : p) {
+    for (auto i = u.second.begin(); i != u.second.end();) {
+      if (counts[*i] > 1) u.second.erase(i++);
+      else ++i;
+    }
+  }
+}
+bool isproject(const string& word)
+{
+    for(auto& c: word){
+        if(!isspace(static_cast<unsigned char>(c)))
+            if(!isupper(static_cast<unsigned char>(c)))
+                return false;
+        }
+    return true;
+}
+
+
+bool cmp(const pair<int, string> &a, const pair<int, string> &b) {
+  if (a.first == b.first) return a.second < b.second;
+  return a.first > b.first;
+}
+
+void print() {
+	erase();
+  vector<pair<int, string>> v;
+  for (auto &it : p) v.push_back(make_pair(it.second.size(), it.first));
+  sort(v.begin(), v.end(), cmp);
+  for (int i = 0; i < v.size(); i++) cout << v[i].second << ' ' << v[i].first << endl;
+}
+
+int main() {
+	string s;
+	getline(cin,s);
+
+	while(true){
+		if(isproject(s)){
+			string ss=s;
+			getline(cin,s);
+			p[ss];
+			while(!isproject(s) && s!="0" && s!="1"){
+				p[ss].insert(s);
+				getline(cin,s);
+			}
+		for (auto &it : p[ss]){
+			counts[it]++;
+			//cout<<it<<"\n";
+		}
+		}
+		else if(s=="1"){
+			print();
+    		p.clear(); counts.clear();
+    		getline(cin, s);
+		}
+		else return 0;
+	}
+
+	return 0;
+}
